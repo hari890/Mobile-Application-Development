@@ -1,0 +1,56 @@
+package com.example.progressapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+    private ProgressBar pgsbar;
+    private int i=0;
+    private TextView txtview;
+    private Handler hdlr =new Handler();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        pgsbar = (ProgressBar) findViewById(R.id.pbar);
+        txtview = (TextView) findViewById(R.id.tview);
+        Button btn =(Button) findViewById(R.id.btnshow);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                i=pgsbar.getProgress();
+                new Thread(new Runnable() {
+
+                    public void run() {
+                        while (i < 100)
+                        {
+                            i+=1;
+                            hdlr.post(new Runnable()
+                            {
+                                public void run() {
+                                    pgsbar.setProgress(i);
+                                    txtview.setText(i+"/"+pgsbar.getMax());
+                                }
+                            });
+                            try {
+                                Thread.sleep(100);
+                            }
+                            catch (InterruptedException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).start();
+
+            }
+        });
+    }
+}
