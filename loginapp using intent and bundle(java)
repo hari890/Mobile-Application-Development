@@ -1,0 +1,33 @@
+public class MainActivity extends AppCompatActivity {
+EditText username;
+EditText userphonenumber;
+Button b1;
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+setContentView(R.layout.activity_main);
+username= (EditText) findViewById(R.id.name);
+userphonenumber=(EditText) findViewById(R.id.Phonenumber);
+b1=(Button) findViewById(R.id.button);
+}
+public void movepage(View v)
+{
+String stname=username.getText().toString();
+String stphoneno=userphonenumber.getText().toString();
+if(stname.equals("Hyma") && stphoneno.equals("9000181787"))
+{
+Intent in=new Intent(MainActivity.this,Activity2.class);
+startActivity(in);
+}
+else if(stname.equals(" ")||stphoneno.equals(""))
+{
+Toast.makeText(getBaseContext(),"Enter both name and
+phone",Toast.LENGTH_SHORT).show();
+}
+else
+{
+Toast.makeText(getBaseContext(),"Wrong name and
+phonenumber entered",Toast.LENGTH_SHORT).show();
+}
+}
+}
